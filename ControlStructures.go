@@ -39,7 +39,7 @@ func MapKeys[K comparable](m map[K]any) []K {
 }
 
 // MapValues Return an array representing the of values of the given map
-func MapValues[V any](m map[comparable]V) []V {
+func MapValues[V any](m map[interface{}]V) []V {
 	values := make([]V, 0, len(m))
 
 	for _, v := range m {
@@ -71,7 +71,7 @@ func StructToMap(in interface{}) (res map[string]interface{}, e error) {
 func MapToStruct[T any](el map[string]interface{}) (res T, e error) {
 	j, e := json.Marshal(el)
 	if e != nil {
-		return nil, e
+		return T{}, e
 	}
 	e = json.Unmarshal(j, &res)
 	return res, e
