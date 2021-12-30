@@ -56,7 +56,7 @@ func ArrayMap[V any, R any](arr []V, f func(el V) R) []R {
 	}
 	return result
 }
-
+ 
 // StructToMap parse a struct into a map
 func StructToMap(in interface{}) (res map[string]interface{}, e error) {
 	bytes, e := json.Marshal(in)
