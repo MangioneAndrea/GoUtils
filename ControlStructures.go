@@ -2,6 +2,7 @@ package Util
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // UniqueArr Return an array with unique values
@@ -29,7 +30,7 @@ func MapEntries[K comparable, V any](m map[K]V) ([]K, []V) {
 }
 
 // MapKeys Return an array representing the set of keys of the given map
-func MapKeys[K comparable](m map[K]any) []K {
+func MapKeys[K comparable, V any](m map[K]V) []K {
 	keys := make([]K, 0, len(m))
 
 	for k := range m {
@@ -39,7 +40,7 @@ func MapKeys[K comparable](m map[K]any) []K {
 }
 
 // MapValues Return an array representing the of values of the given map
-func MapValues[V any](m map[interface{}]V) []V {
+func MapValues[K comparable, V any](m map[K]V) []V {
 	values := make([]V, 0, len(m))
 
 	for _, v := range m {
@@ -56,7 +57,7 @@ func ArrayMap[V any, R any](arr []V, f func(el V) R) []R {
 	}
 	return result
 }
- 
+
 // StructToMap parse a struct into a map
 func StructToMap(in interface{}) (res map[string]interface{}, e error) {
 	bytes, e := json.Marshal(in)
@@ -68,11 +69,13 @@ func StructToMap(in interface{}) (res map[string]interface{}, e error) {
 }
 
 // MapToStruct parse a map into a struct
-func MapToStruct[T any](el map[string]interface{}) (res T, e error) {
+func MapToStruct[T any](el map[string]interface{}) (T, error) {
+	var res T
 	j, e := json.Marshal(el)
 	if e != nil {
-		return T{}, e
+		return res, e
 	}
 	e = json.Unmarshal(j, &res)
+	fmt.Println(res)
 	return res, e
 }
