@@ -49,6 +49,14 @@ func MapValues[K comparable, V any](m map[K]V) []V {
 	return values
 }
 
+// ForEach Run a function for each element of an array. The parameters are ECMA alike without array (value, index)
+// where index and array are optional
+func ForEach[V any](arr []V, f func(el V, i int)) {
+	for i, v := range arr {
+		f(v, i)
+	}
+}
+
 // ArrayMap function equivalent to the javascript .map
 func ArrayMap[V any, R any](arr []V, f func(el V) R) []R {
 	result := make([]R, len(arr))

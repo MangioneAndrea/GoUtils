@@ -82,6 +82,26 @@ func TestMapKeys(t *testing.T) {
 		t.Errorf("MapEntries() got = %v, want %v", keys, expKeys)
 	}
 }
+
+func TestForEach(t *testing.T) {
+	arr := []interface{}{1, "hello", map[string]int{}}
+
+	arr2 := make([]interface{}, 3)
+	ForEach(arr, func(el interface{}, i int) {
+		arr2[i] = el
+	})
+
+	if !reflect.DeepEqual(arr[0], arr2[0]) {
+		t.Errorf("copy[0] = %v, want %v", arr[0], arr[0])
+	}
+	if !reflect.DeepEqual(arr[1], arr2[1]) {
+		t.Errorf("original[0] = %v, want %v", arr[0], arr[0])
+	}
+	if !reflect.DeepEqual(arr[2], arr2[2]) {
+		t.Errorf("original[0] = %v, want %v", arr[0], arr[0])
+	}
+}
+
 func TestMapValues(t *testing.T) {
 	m := map[int]string{
 		1:  "hi",
