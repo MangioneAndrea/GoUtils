@@ -1,4 +1,4 @@
-package Util
+package structures
 
 import (
 	"fmt"
@@ -7,11 +7,6 @@ import (
 	"strconv"
 	"testing"
 )
-
-type V string
-type R int64
-type K interface{}
-type T float32
 
 func TestArrayMap_StringToInt(t *testing.T) {
 	type V string
