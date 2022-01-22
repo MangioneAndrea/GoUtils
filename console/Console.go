@@ -1,6 +1,10 @@
 package console
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+	"os"
+)
 
 type Color string
 
@@ -16,10 +20,14 @@ var (
 	White   = Color("\033[1;37m%s\033[0m")
 )
 
+var out io.Writer = os.Stdout
+
 // Color Format text with custom color
 func setColor(colorString Color) func(...interface{}) string {
 	sprint := func(args ...interface{}) string {
+		fmt.Printf("color '%s'", colorString)
 		if colorString == None {
+			fmt.Print("None!")
 			return fmt.Sprint(args...)
 		}
 		return fmt.Sprintf(string(colorString),
@@ -47,9 +55,10 @@ func resolveProps(props []interface{}) (interface{}, ShowIf) {
 func Print(a interface{}, desc interface{}, showIf ShowIf, color Color) {
 	if showIf(a) {
 		if desc != nil {
-			fmt.Print(setColor(color)(desc), setColor(color)(": "))
+			fmt.Fprint(out, setColor(color)(desc), setColor(color)(": "))
 		}
-		fmt.Println(setColor(color)(a))
+		fmt.Printf("set'%s'", setColor(color)(a))
+		fmt.Fprintln(out, setColor(color)(a))
 	}
 }
 
