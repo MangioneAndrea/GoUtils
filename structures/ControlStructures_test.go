@@ -113,6 +113,20 @@ func TestMapValues(t *testing.T) {
 		t.Errorf("MapEntries() got1 = %v, want %v", values, expValues)
 	}
 }
+func TestFilter(t *testing.T) {
+	m := []string{"123", "12345", "", "asdhasdkjasd"}
+	expValues := []string{"12345", "asdhasdkjasd"}
+	sort.Strings(expValues)
+
+	values := Filter(m, func(el string, i int) bool {
+		return len(el) >= 5
+	})
+	sort.Strings(values)
+
+	if !reflect.DeepEqual(values, expValues) {
+		t.Errorf("MapEntries() got1 = %v, want %v", values, expValues)
+	}
+}
 
 func TestMapToStruct(t *testing.T) {
 	type Struct struct {

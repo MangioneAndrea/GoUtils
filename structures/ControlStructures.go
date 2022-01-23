@@ -57,6 +57,16 @@ func ForEach[V any](arr []V, f func(el V, i int)) {
 	}
 }
 
+// Filter an array with the result of a given function. True keeps the element, false discards it
+func Filter[V any](arr []V, f func(el V, i int) bool) (result []V) {
+	for i, v := range arr {
+		if f(v, i) {
+			result = append(result, v)
+		}
+	}
+	return result
+}
+
 // ArrayMap function equivalent to the javascript .map
 func ArrayMap[V any, R any](arr []V, f func(el V) R) []R {
 	result := make([]R, len(arr))
