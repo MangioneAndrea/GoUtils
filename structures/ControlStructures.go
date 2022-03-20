@@ -1,10 +1,5 @@
 package structures
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 // UniqueArr Return an array with unique values
 func UniqueArr[T comparable](input []T) (res []T) {
 	m := make(map[T]bool)
@@ -74,26 +69,4 @@ func ArrayMap[V any, R any](arr []V, f func(el V) R) []R {
 		result[i] = f(elem)
 	}
 	return result
-}
-
-// StructToMap parse a struct into a map
-func StructToMap(in interface{}) (res map[string]interface{}, e error) {
-	bytes, e := json.Marshal(in)
-	if e != nil {
-		return nil, e
-	}
-	e = json.Unmarshal(bytes, &res)
-	return res, e
-}
-
-// MapToStruct parse a map into a struct
-func MapToStruct[T any](el map[string]interface{}) (T, error) {
-	var res T
-	j, e := json.Marshal(el)
-	if e != nil {
-		return res, e
-	}
-	e = json.Unmarshal(j, &res)
-	fmt.Println(res)
-	return res, e
 }
